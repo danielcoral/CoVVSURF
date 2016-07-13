@@ -1,2 +1,0 @@
-load("/Users/chavent/Dropbox/Chaud Patate/Package/ChaudPatate/data/don600.rda")
-colnames(X)
