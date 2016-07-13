@@ -1,6 +1,6 @@
 Package: CoVVSURF
 Type: Package
-Title: Combines clustering of variables with feature selection using random forests.
+Title: Combines clustering of variables with feature selection using random forests
 Version: 0.1
 Date: 2016-07-11
 Authors@R: c(person("Robin", "Genuer", email = "Robin.Genuer@isped.u-bordeaux2.fr", role = c("aut", "cre")),
