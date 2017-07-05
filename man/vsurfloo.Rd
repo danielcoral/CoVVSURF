@@ -19,4 +19,3 @@ vsurfloo(X, y, vsurfs.object = NULL, path = NULL, nfor = 100, ...)
 
 \item{...}{further parameters to be passed on VSURF function}
 }
-

@@ -15,4 +15,3 @@ CoVloo(X, prefix = NULL, mc.cores = 1, ...)
 
 \item{...}{passed to mclapply}
 }
-

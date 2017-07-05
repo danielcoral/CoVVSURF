@@ -23,4 +23,3 @@ simu(n = 600, rho = 0.9, sigma = 1, name = "don", threshold = 0.5,
 \value{
 the matrix X of explonatory variables and y the binary variable to predict
 }
-

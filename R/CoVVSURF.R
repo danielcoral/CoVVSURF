@@ -89,6 +89,7 @@ covsurf <- function(X, y, kval = 2:ncol(X), tree = NULL, nse=1, ...) {
 #' @importFrom parallel mclapply
 #' @importFrom stats predict
 #' @method predict covsurf
+#' @export
 predict.covsurf <- function(object, newdata, select = TRUE, nfor = 1,
                             mcores = 1) {
   scores <- stats::predict(object$ptree, PCAmixdata::splitmix(newdata)$X.quanti,
@@ -326,6 +327,7 @@ vsurfloo <- function(X, y, vsurfs.object = NULL, path = NULL, nfor = 100, ...) {
 #' @param ... to be passed on plot function
 #' @importFrom graphics plot
 #' @method plot covsurf
+#' @export
 plot.covsurf <- function(x, choice = "covsurf",...) {
   cs <- x
   

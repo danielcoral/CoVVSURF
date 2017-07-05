@@ -24,4 +24,3 @@ data(don60)
 kval <- c(2:15, seq(from = 20, to = ncol(X), by = 10))
 don60covs <- covsurf(X, y, kval)
 }
-
