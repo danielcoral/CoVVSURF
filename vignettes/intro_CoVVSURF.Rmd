@@ -37,6 +37,7 @@ library(CoVVSURF)
 help(package=CoVVSURF)
 ```
 
+
 ## Simulated dataset
 The data are simulated from an underlying classification model where 120 explonatory variables (80 quantitative and 40 qualitative with underlying informative and non informative groups) explain a binary response variable. The function __simu_classif__ generates $n$ observations of the $p=120$ explonatory variables in a matrix $X$ and of the binary reponse in a vector $y$.
 
@@ -69,12 +70,16 @@ In the first step the function __covsurf__ selects groups of informative variabl
 as predictors and $y$ as output variable. Denote by $m \leq kopt$ the number of selected informative synthetic variables (corresponding to the interpretation set of VSURF).
 
 \bigskip
-
+Parallel computing with several cores can be used to speed the execution.
+\bigskip
 ```{r}
 kval <- c(2:15, seq(from = 20, to = ncol(train$X), by = 10))
-res <- covsurf(train$X, train$y, kval)
-#or if the tree has already been built
+res <- covsurf(train$X, train$y, kval) 
+#or to seed the execution :
+# if the tree has already been built
 res <- covsurf(train$X, train$y, tree=treecov,kval) 
+# and if you  can use several cores
+res <- covsurf(train$X, train$y, tree=treecov,kval,ncores=3) 
 names(res)
 plot(res)
 res$kopt # the partition in 10 cluster of the dendrogram is selected
@@ -128,13 +133,15 @@ plot(tree)
 The functions __covsurf__ and __predict.covsurf__ implement the CoV/VSURF procedure. The procedure is similar to that presented previously in the context of the classification with the OOB mean square errors (sum of squared residuals divided by $n$) replacing the OOB error rate.
 
 \bigskip
-In the first step the function __covsurf__ selects groups of informative variables.
+In the first step the function __covsurf__ selects groups of informative variables. Parallel computing with several cores can be used to speed the execution.
 
 ```{r}
 kval <- c(2:15, seq(from = 20, to = ncol(train$X), by = 10))
 res <- covsurf(train$X, train$y, kval)
 #or if the tree has already been built
 res <- covsurf(train$X, train$y, tree=treecov,kval) #be patient...
+#or if several cores
+res <- covsurf(train$X, train$y, tree=treecov,kval,ncores=3) 
 names(res)
 plot(res)
 res$kopt # the partition in 9 cluster of the dendrogram is selected
