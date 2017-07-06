@@ -9,3 +9,4 @@ CoV(X)
 \arguments{
 \item{X}{A dataset}
 }
+

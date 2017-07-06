@@ -19,3 +19,4 @@ rfptree(tree, y, k, nfor = 25, ncores = 1, ...)
 
 \item{...}{arguments to be passed on VSURF}
 }
+

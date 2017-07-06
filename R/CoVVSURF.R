@@ -24,20 +24,37 @@ pcamix <- function(X, ndim = 5) {
 
 #' @title Combining ClustOfVar and VSURF
 #' @name covsurf
+#' @description This function selects groups of informative input variables 
+#' to predict a response variable.
 #' @param X dataframe of input variables
 #' @param y vector of responses
 #' @param kval vector of number of classes to try
 #' @param tree optional tree given by hclustvar
 #' @param nse number of standard-deviation to add to select minimum of OOB rate
 #' @param ... passed to VSURF
+#' @return 
+#' \item{kopt}{the optimal number of groups of variables}
+#' \item{ptree}{the partition in \code{kopt} clusters of the dendrogram of \code{CoV}.}
+#' \item{vsurf_ptree}{\code{VSURF} applied to the \code{kopt} synthetic 
+#' variables.}
+#' \item{vsel}{synthetic variables selected by \code{VSURF}.}
+#' \item{csel}{groups of variables selected by \code{VSURF}.}
+#' \item{rfsel}{RF applied to  the selected synthetic variables}
+#'\item{rfclust}{RF applied to  all the synthetic variables.}
+#'\item{oob}{a matrix with mean OOB error (first column) and
+#' OOB standard deviation (second column).}
 #' @examples 
 #' data(don60)
 #' kval <- c(2:15, seq(from = 20, to = ncol(X), by = 10))
 #' don60covs <- covsurf(X, y, kval)
+#' plot(don60covs)
 #' @importFrom ClustOfVar cutreevar
 #' @importFrom VSURF VSURF
 #' @importFrom randomForest randomForest
 #' @export
+#' @references 
+#' Combining clustering of variables and feature selection using random forests: the CoV/VSURF 
+#' procedure, Marie Chavent, Robin Genuer, Jerome Saracco, hal-01345840
 covsurf <- function(X, y, kval = 2:ncol(X), tree = NULL, nse=1, ...) {
 
   if (is.null(tree)) {
@@ -47,7 +64,7 @@ covsurf <- function(X, y, kval = 2:ncol(X), tree = NULL, nse=1, ...) {
   oob <- matrix(NA, nrow = length(kval), ncol = 2)
     
   for (k in kval) {
-    oob[which(kval == k), ] <- rfptree(tree, y, k, ...)
+    oob[which(kval == k), ] <- rfptree(tree, y, k,...)
     print(paste("k =", k, "done", sep=" "))
   }
   
@@ -165,8 +182,12 @@ rfptree <- function(tree, y, k, nfor = 25, ncores = 1, ...) {
   xtree <- ptree$scores
   
   rf <- function(i, ...) {
-    out <- utils::tail(randomForest::randomForest(xtree, y,
+    if (is.factor(y))
+      out <- utils::tail(randomForest::randomForest(xtree, y,
                              mtry=max(floor(k/3),1), ...)$err.rate[, 1], n=1)
+    else
+      out <- utils::tail(randomForest::randomForest(xtree, y,
+                                                    mtry=max(floor(k/3),1), ...)$mse, n=1)
   }
   
   rfs <- parallel::mclapply(1:nfor, rf, ... , mc.cores = ncores)
@@ -330,11 +351,14 @@ vsurfloo <- function(X, y, vsurfs.object = NULL, path = NULL, nfor = 100, ...) {
 #' @export
 plot.covsurf <- function(x, choice = "covsurf",...) {
   cs <- x
-  
+  if (is.factor(cs$y))
+    ylab="OOB error rate"
+  else
+    ylab="OOB mean square error"
   if (choice == "covsurf") {
     kval <- cs$kval
     graphics::plot(kval, cs$oob[, 1], type="l", xlab="Partition cardinal",
-         ylab="OOB error rate", ...)
+         ylab=ylab, ...)
   }
   
   if (choice == "vsurf") {

@@ -19,8 +19,30 @@ covsurf(X, y, kval = 2:ncol(X), tree = NULL, nse = 1, ...)
 
 \item{...}{passed to VSURF}
 }
+\value{
+\item{kopt}{the optimal number of groups of variables}
+\item{ptree}{the partition in \code{kopt} clusters of the dendrogram of \code{CoV}.}
+\item{vsurf_ptree}{\code{VSURF} applied to the \code{kopt} synthetic 
+variables.}
+\item{vsel}{synthetic variables selected by \code{VSURF}.}
+\item{csel}{groups of variables selected by \code{VSURF}.}
+\item{rfsel}{RF applied to  the selected synthetic variables}
+\item{rfclust}{RF applied to  all the synthetic variables.}
+\item{oob}{a matrix with mean OOB error (first column) and
+OOB standard deviation (second column).}
+}
+\description{
+This function selects groups of informative input variables 
+to predict a response variable.
+}
 \examples{
 data(don60)
 kval <- c(2:15, seq(from = 20, to = ncol(X), by = 10))
 don60covs <- covsurf(X, y, kval)
+plot(don60covs)
 }
+\references{
+Combining clustering of variables and feature selection using random forests: the CoV/VSURF 
+procedure, Marie Chavent, Robin Genuer, Jerome Saracco, hal-01345840
+}
+

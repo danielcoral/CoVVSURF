@@ -21,3 +21,4 @@ obj <- PCAmixdata::splitmix(X)
 tree <- ClustOfVar::hclustvar(obj$X.quanti,obj$X.quali)
 don60ptree2 <- vsurfptree(tree, y, k = 2)
 }
+

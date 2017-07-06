@@ -26,3 +26,4 @@ covsurfloo(X, y, kval = 2:ncol(X), prefix = NULL, avail.tree = FALSE,
 
 \item{...}{passed to covsurf}
 }
+
