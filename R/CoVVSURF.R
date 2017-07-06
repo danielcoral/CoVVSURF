@@ -31,6 +31,7 @@ pcamix <- function(X, ndim = 5) {
 #' @param kval vector of number of classes to try
 #' @param tree optional tree given by hclustvar
 #' @param nse number of standard-deviation to add to select minimum of OOB rate
+#' @param ncores number of cores to use for parallel computing
 #' @param ... passed to VSURF
 #' @return 
 #' \item{kopt}{the optimal number of groups of variables}
@@ -55,7 +56,7 @@ pcamix <- function(X, ndim = 5) {
 #' @references 
 #' Combining clustering of variables and feature selection using random forests: the CoV/VSURF 
 #' procedure, Marie Chavent, Robin Genuer, Jerome Saracco, hal-01345840
-covsurf <- function(X, y, kval = 2:ncol(X), tree = NULL, nse=1, ...) {
+covsurf <- function(X, y, kval = 2:ncol(X), tree = NULL, nse=1, ncores = 1,...) {
 
   if (is.null(tree)) {
     tree <- CoV(X)
@@ -64,7 +65,7 @@ covsurf <- function(X, y, kval = 2:ncol(X), tree = NULL, nse=1, ...) {
   oob <- matrix(NA, nrow = length(kval), ncol = 2)
     
   for (k in kval) {
-    oob[which(kval == k), ] <- rfptree(tree, y, k,...)
+    oob[which(kval == k), ] <- rfptree(tree, y, k,ncores=ncores,...)
     print(paste("k =", k, "done", sep=" "))
   }
   

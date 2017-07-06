@@ -4,7 +4,7 @@
 \alias{covsurf}
 \title{Combining ClustOfVar and VSURF}
 \usage{
-covsurf(X, y, kval = 2:ncol(X), tree = NULL, nse = 1, ...)
+covsurf(X, y, kval = 2:ncol(X), tree = NULL, nse = 1, ncores = 1, ...)
 }
 \arguments{
 \item{X}{dataframe of input variables}
@@ -16,6 +16,8 @@ covsurf(X, y, kval = 2:ncol(X), tree = NULL, nse = 1, ...)
 \item{tree}{optional tree given by hclustvar}
 
 \item{nse}{number of standard-deviation to add to select minimum of OOB rate}
+
+\item{ncores}{number of cores to use for parallel computing}
 
 \item{...}{passed to VSURF}
 }
