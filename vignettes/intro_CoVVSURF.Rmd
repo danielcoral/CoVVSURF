@@ -25,6 +25,7 @@ consisting of the $n$ observations described with the $K$ synthetic variables. T
 
 Details are given in [https://arxiv.org/abs/1608.06740](https://arxiv.org/abs/1608.06740).
 
+
 # Installation
 
 ```{r}
@@ -51,17 +52,16 @@ train$X #explonatory data matrix
 train$y #binary variable to predict
 ```
 
-##Clustering of variables
-The function __CoV__ builds a dendrogram of variables using the R package __ClustOfVar__.
 
-\bigskip
+## Clustering of variables
+The function __CoV__ builds a dendrogram of variables using the R package __ClustOfVar__.
 
 ```{r}
 treecov <- CoV(train$X) # dendrogram of the 120 variables with ClustOfVar
 plot(treecov)
 ```
 
-##The CoV/VSURF procedure for classification
+## The CoV/VSURF procedure for classification
 The functions __covsurf__ and __predict.covsurf__ implement the CoV/VSURF procedure. The input of the procedure is a dataset $(X,y)$ and the goal is to select groups of informative variables in $X$ to predict $y$.  
 
 In the first step the function __covsurf__ selects groups of informative variables in the following way: 
@@ -120,7 +120,7 @@ train$X #explonatory data matrix
 train$y #numeric variable to predict
 ```
 
-##Clustering of variables
+## Clustering of variables
 The function __CoV__ builds a dendrogram of variables using the R package __ClustOfVar__.
 
 ```{r}
@@ -128,7 +128,7 @@ treecov <- CoV(train$X) # dendrogram of the 120 variables with ClustOfVar
 plot(tree)
 ```
 
-##The CoV/VSURF procedure for regression
+## The CoV/VSURF procedure for regression
 The functions __covsurf__ and __predict.covsurf__ implement the CoV/VSURF procedure. The procedure is similar to that presented previously in the context of the classification with the OOB mean square errors (sum of squared residuals divided by $n$) replacing the OOB error rate.
 
 
