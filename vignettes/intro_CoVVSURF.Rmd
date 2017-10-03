@@ -72,9 +72,8 @@ In the first step the function __covsurf__ selects groups of informative variabl
   4. Perform VSURF with the $kopt$ synthetic variables $f^1,...,f^{kopt}$ 
 as predictors and $y$ as output variable. Denote by $m \leq kopt$ the number of selected informative synthetic variables (corresponding to the interpretation set of VSURF).
 
-\bigskip
 Parallel computing with several cores can be used to speed the execution.
-\bigskip
+
 ```{r}
 kval <- c(2:15, seq(from = 20, to = ncol(train$X), by = 10))
 res <- covsurf(train$X, train$y, kval) 
@@ -95,7 +94,6 @@ In the seconde step the function  __predict.covsurf__ gives the prediction of a 
   1. Train a random forest, $\hat{f}$, on the dataset consisting of the $m$ selected synthetic variables and $y$.
   2. Compute the scores of $x$ on the $m$ selected synthetic variables and predict its class label using $\hat{f}$.
 
-\bigskip
 ```{r}
 test <- simu_classif(n=100,seed=20) # simulated test data set
 ```
@@ -125,8 +123,6 @@ train$y #numeric variable to predict
 ##Clustering of variables
 The function __CoV__ builds a dendrogram of variables using the R package __ClustOfVar__.
 
-\bigskip
-
 ```{r}
 treecov <- CoV(train$X) # dendrogram of the 120 variables with ClustOfVar
 plot(tree)
@@ -135,7 +131,7 @@ plot(tree)
 ##The CoV/VSURF procedure for regression
 The functions __covsurf__ and __predict.covsurf__ implement the CoV/VSURF procedure. The procedure is similar to that presented previously in the context of the classification with the OOB mean square errors (sum of squared residuals divided by $n$) replacing the OOB error rate.
 
-\bigskip
+
 In the first step the function __covsurf__ selects groups of informative variables. Parallel computing with several cores can be used to speed the execution.
 
 ```{r}
@@ -154,7 +150,6 @@ res$csel # the corresponding 6 selected groups of variables
 
 In the seconde step the function  __predict.covsurf__ gives the prediction of a set of new observations $x$.
 
-\bigskip
 ```{r}
 test <- simu_reg(n=100,seed=20) # simulated test data set
 ```
