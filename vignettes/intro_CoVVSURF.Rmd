@@ -12,13 +12,16 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE,eval=FALSE)
 ```
 
-This document is a short introduction to the R package CoVVSURF which combines clustering of variables and feature selection using random forest. The procedure CoV/VSURF is a two steps methodology for dimension reduction and variable selection in the context of supervised classifcation (which can also be applied for regression problems). First, one eliminates
-redundancy using clustering of variables, based on the R package __ClustOfVar__. This clustering approach, denoted by __CoV__ hereafter, allows one to deal with both numerical and categoricalcvariables. The clustering of variables groups together highly correlated variables and provides for each group (cluster)ca synthetic variable which is a numerical variable summarizing the variables within a cluster. The main advantage of
-this step is to eliminate redundancy and to keep all the variables together in a cluster during the rest of the analysis. Moreover it reduces the dimension of the data by replacing the p original variables by $K$ synthetic variables (where $K$ denotes the selected number of clusters). Note that this clustering of variables approach does not require définition
-of a priori groups of variables as in group lasso or sparse group lasso approaches. In addition, the reduction of dimension provides $K$ synthetic variables which only use the variables within a cluster, unlike
-the principal components in principal component analysis (PCA). Hence, in __CoV__, an original variable takes action in the construction of a unique synthetic variable, which make the interpretation easier.
-Secondly, the most important synthetic variables obtained in the first step are selected using a procedure based on random forests (RF) implemented in the R package __VSURF__. This variable selection procedure, denoted __VSURF__ hereafter, is applied to the reduced dataset consisting of
-the $n$ observations described with the $K$ synthetic variables. Thus a list of selected synthetic variables (i.e. a list of clusters of variables) is obtained and the prediction for new observations can be done with a predictor built on these selected synthetic variables
+This document is a short introduction to the R package CoVVSURF which combines clustering of variables and feature selection using random forest. The procedure CoV/VSURF is a statistical methodology for dimension reduction and variable selection in the context of supervised classifcation (which can also be applied for regression problems).
+
+Redundancy is reduced using clustering of variables, based on the R package `ClustOfVar`. This clustering approach, denoted by __CoV__ hereafter, allows one to deal with both numerical and categoricalcvariables. The clustering of variables groups together highly correlated variables and provides for each group (cluster)ca synthetic variable which is a numerical variable summarizing the variables within a cluster. The main advantage of this approach is to eliminate redundancy and to keep all the variables together in a cluster during the rest of the analysis. Moreover it reduces the dimension of the data by replacing the $p$ original variables by $K$ synthetic variables (where $K$ denotes the selected number of clusters). Note that this clustering of variables approach does not require définition of a priori groups of variables as in group lasso or sparse group lasso approaches.
+
+In addition, the reduction of dimension provides $K$ synthetic variables which only use the variables within a cluster, unlike
+the principal components in principal component analysis (PCA). Hence, in __CoV__, an original variable takes action in the 
+construction of a unique synthetic variable, which make the interpretation easier.
+
+The most important synthetic variables given by __CoV__ are selected using a procedure based on random forests (RF) implemented in the R package `VSURF`. This variable selection procedure, denoted __VSURF__ hereafter, is applied to the reduced dataset
+consisting of the $n$ observations described with the $K$ synthetic variables. Thus a list of selected synthetic variables (i.e. a list of clusters of variables) is obtained and the prediction for new observations can be done with a predictor built on these selected synthetic variables.
 
 Details are given in [https://arxiv.org/abs/1608.06740](https://arxiv.org/abs/1608.06740).
 
