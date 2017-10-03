@@ -12,16 +12,16 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE,eval=FALSE)
 ```
 
-This document is a short introduction to the R package CoVVSURF which combines clustering of variables and feature selection using random forest. The procedure CoV/VSURF is a statistical methodology for dimension reduction and variable selection in the context of supervised classifcation (which can also be applied for regression problems).
+This document is a short introduction to the R package CoVVSURF which combines clustering of variables and feature selection using random forest. The procedure CoV/VSURF is a statistical methodology for dimension reduction and variable selection in the context of supervised classification (which can also be applied for regression problems).
 
-Redundancy is reduced using clustering of variables, based on the R package `ClustOfVar`. This clustering approach, denoted by __CoV__ hereafter, allows one to deal with both numerical and categoricalcvariables. The clustering of variables groups together highly correlated variables and provides for each group (cluster)ca synthetic variable which is a numerical variable summarizing the variables within a cluster. The main advantage of this approach is to eliminate redundancy and to keep all the variables together in a cluster during the rest of the analysis. Moreover it reduces the dimension of the data by replacing the $p$ original variables by $K$ synthetic variables (where $K$ denotes the selected number of clusters). Note that this clustering of variables approach does not require définition of a priori groups of variables as in group lasso or sparse group lasso approaches.
+Redundancy is reduced using clustering of variables, based on the R package `ClustOfVar`. This clustering approach, denoted by __CoV__ hereafter, allows one to deal with both numerical and categorical variables. The clustering of variables groups together highly correlated variables and provides for each group (cluster) a synthetic variable which is a numerical variable summarizing the variables within a cluster. The main advantage of this approach is to eliminate redundancy and to keep all the variables together in a cluster during the rest of the analysis. Moreover it reduces the dimension of the data by replacing the _p_ original variables by _K_ synthetic variables (where _K_ denotes the selected number of clusters). Note that this clustering of variables approach does not require définition of a priori groups of variables as in group lasso or sparse group lasso approaches.
 
-In addition, the reduction of dimension provides $K$ synthetic variables which only use the variables within a cluster, unlike
+In addition, the reduction of dimension provides _K_ synthetic variables which only use the variables within a cluster, unlike
 the principal components in principal component analysis (PCA). Hence, in __CoV__, an original variable takes action in the 
 construction of a unique synthetic variable, which make the interpretation easier.
 
 The most important synthetic variables given by __CoV__ are selected using a procedure based on random forests (RF) implemented in the R package `VSURF`. This variable selection procedure, denoted __VSURF__ hereafter, is applied to the reduced dataset
-consisting of the $n$ observations described with the $K$ synthetic variables. Thus a list of selected synthetic variables (i.e. a list of clusters of variables) is obtained and the prediction for new observations can be done with a predictor built on these selected synthetic variables.
+consisting of the _n_ observations described with the _K_ synthetic variables. Thus a list of selected synthetic variables (i.e. a list of clusters of variables) is obtained and the prediction for new observations can be done with a predictor built on these selected synthetic variables.
 
 Details are given in [https://arxiv.org/abs/1608.06740](https://arxiv.org/abs/1608.06740).
 
@@ -43,7 +43,7 @@ help(package=CoVVSURF)
 
 
 ## Simulated dataset
-The data are simulated from an underlying classification model where 120 explonatory variables (80 quantitative and 40 qualitative with underlying informative and non informative groups) explain a binary response variable. The function __simu_classif__ generates $n$ observations of the $p=120$ explonatory variables in a matrix $X$ and of the binary reponse in a vector $y$.
+The data are simulated from an underlying classification model where 120 explonatory variables (80 quantitative and 40 qualitative with underlying informative and non informative groups) explain a binary response variable. The function __simu_classif__ generates _n_ observations of the _p_=120 explonatory variables in a matrix _X_ and of the binary reponse in a vector _y_.
 
 
 ```{r}
@@ -62,15 +62,15 @@ plot(treecov)
 ```
 
 ## The CoV/VSURF procedure for classification
-The functions __covsurf__ and __predict.covsurf__ implement the CoV/VSURF procedure. The input of the procedure is a dataset $(X,y)$ and the goal is to select groups of informative variables in $X$ to predict $y$.  
+The functions __covsurf__ and __predict.covsurf__ implement the CoV/VSURF procedure. The input of the procedure is a dataset _(X,y)_ and the goal is to select groups of informative variables in _X_ to predict _y_.  
 
 In the first step the function __covsurf__ selects groups of informative variables in the following way: 
   
   1. Build the dendrogram of variables  with __CoV__ 
-  2. Let $kval$ be the set of number of groups to try. For each $k \in kval$, cut __CoV__ tree (dendrogram) in $k$ clusters, train a Random Forest (RF) with the $k$ synthetic variables $f^1,...,f^k$ as predictors and $y$ as output variable and compute the mean OOB error rates.
-  3. Choose the optimal number $kopt$ of clusters, which leads to the minimum mean OOB error rate. Cut __CoV__ tree in $kopt$ clusters.
-  4. Perform VSURF with the $kopt$ synthetic variables $f^1,...,f^{kopt}$ 
-as predictors and $y$ as output variable. Denote by $m \leq kopt$ the number of selected informative synthetic variables (corresponding to the interpretation set of VSURF).
+  2. Let _kval_ be the set of number of groups to try. For each _k_ in _kval_, cut __CoV__ tree (dendrogram) in _k_ clusters, train a Random Forest (RF) with the _k_ synthetic variables _f1_,..., _fk_ as predictors and _y_ as output variable and compute the mean OOB error rates.
+  3. Choose the optimal number _kopt_ of clusters, which leads to the minimum mean OOB error rate. Cut __CoV__ tree in _kopt_ clusters.
+  4. Perform VSURF with the _kopt_ synthetic variables _f1_,..., _fk_
+as predictors and _y_ as output variable. Denote by _m_ the number of selected informative synthetic variables (corresponding to the interpretation set of VSURF).
 
 Parallel computing with several cores can be used to speed the execution.
 
@@ -89,10 +89,10 @@ res$vsel # 5 synthetic variables are selected by VSURF
 res$csel # the corresponding 5 selected groups of variables 
 ```
 
-In the seconde step the function  __predict.covsurf__ gives the prediction of a set of new observations $x$ in the following way:
+In the seconde step the function  __predict.covsurf__ gives the prediction of a set of new observations _x_ in the following way:
 
-  1. Train a random forest, $\hat{f}$, on the dataset consisting of the $m$ selected synthetic variables and $y$.
-  2. Compute the scores of $x$ on the $m$ selected synthetic variables and predict its class label using $\hat{f}$.
+  1. Train a random forest, _rf_, on the dataset consisting of the _m_ selected synthetic variables and _y_.
+  2. Compute the scores of _x_ on the _m_ selected synthetic variables and predict its class label using _rf_.
 
 ```{r}
 test <- simu_classif(n=100,seed=20) # simulated test data set
@@ -112,7 +112,7 @@ help(package=CoVVSURF)
 ```
 
 ## Simulated dataset
-The data are simulated from an underlying classification model where 120 explonatory variables (80 quantitative and 40 qualitative with underlying informative and non informative groups) explain a numeric response variable. The function __simu_reg__ generates $n$ observations of the $p=120$ explonatory variables in a matrix $X$ and of the numeric reponse in a vector $y$.
+The data are simulated from an underlying classification model where 120 explonatory variables (80 quantitative and 40 qualitative with underlying informative and non informative groups) explain a numeric response variable. The function __simu_reg__ generates _n_ observations of the _p_=120 explonatory variables in a matrix _X_ and of the numeric reponse in a vector _y_.
 
 ```{r}
 train <- simu_reg(n=60,seed=10) # simulated training data set
@@ -129,7 +129,7 @@ plot(tree)
 ```
 
 ## The CoV/VSURF procedure for regression
-The functions __covsurf__ and __predict.covsurf__ implement the CoV/VSURF procedure. The procedure is similar to that presented previously in the context of the classification with the OOB mean square errors (sum of squared residuals divided by $n$) replacing the OOB error rate.
+The functions __covsurf__ and __predict.covsurf__ implement the CoV/VSURF procedure. The procedure is similar to that presented previously in the context of the classification with the OOB mean square errors (sum of squared residuals divided by _n_) replacing the OOB error rate.
 
 
 In the first step the function __covsurf__ selects groups of informative variables. Parallel computing with several cores can be used to speed the execution.
@@ -148,7 +148,7 @@ res$vsel # 6 synthetic variables are selected by VSURF
 res$csel # the corresponding 6 selected groups of variables 
 ```
 
-In the seconde step the function  __predict.covsurf__ gives the prediction of a set of new observations $x$.
+In the seconde step the function  __predict.covsurf__ gives the prediction of a set of new observations _x_.
 
 ```{r}
 test <- simu_reg(n=100,seed=20) # simulated test data set
