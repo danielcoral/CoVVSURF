@@ -11,4 +11,3 @@ pcamix(X, ndim = 5)
 
 \item{ndim}{Number of dimensions in PCAmix}
 }
-

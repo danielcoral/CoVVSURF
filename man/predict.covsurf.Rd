@@ -19,4 +19,3 @@ else predict with all synthetic variables}
 
 \item{mcores}{number of cores used to parallel computations}
 }
-

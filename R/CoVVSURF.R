@@ -103,10 +103,8 @@ covsurf <- function(X, y, kval = 2:ncol(X), tree = NULL, nse=1, ncores = 1,...) 
 #' else predict with all synthetic variables
 #' @param nfor number of forests to build to obtain a collection of predictors
 #' @param mcores number of cores used to parallel computations
-#' @importFrom PCAmixdata predict.PCAmix
 #' @importFrom parallel mclapply
 #' @importFrom stats predict
-#' @method predict covsurf
 #' @export
 predict.covsurf <- function(object, newdata, select = TRUE, nfor = 1,
                             mcores = 1) {
@@ -348,7 +346,6 @@ vsurfloo <- function(X, y, vsurfs.object = NULL, path = NULL, nfor = 100, ...) {
 #' are "vsurf", ... 
 #' @param ... to be passed on plot function
 #' @importFrom graphics plot
-#' @method plot covsurf
 #' @export
 plot.covsurf <- function(x, choice = "covsurf",...) {
   cs <- x

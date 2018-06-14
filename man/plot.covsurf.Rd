@@ -14,4 +14,3 @@ are "vsurf", ...}
 
 \item{...}{to be passed on plot function}
 }
-

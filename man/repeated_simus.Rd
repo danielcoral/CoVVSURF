@@ -18,4 +18,3 @@ repeated_simus(n = 600, nrep = 50, nfor = 50, ...)
 \description{
 Helps to repeat experiments for simulated data
 }
-

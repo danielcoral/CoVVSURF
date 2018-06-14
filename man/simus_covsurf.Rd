@@ -24,4 +24,3 @@ simus_covsurf(data_name, data_test_name = "dontest", nfor = 100,
 
 \item{...}{passed to VSURF}
 }
-

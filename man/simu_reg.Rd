@@ -22,4 +22,3 @@ the matrix X of explonatory variables and y the numeric variable to predict
 Combining clustering of variables and feature selection using random forests: the CoV/VSURF 
 procedure, Marie Chavent, Robin Genuer, Jerome Saracco, hal-01345840
 }
-
