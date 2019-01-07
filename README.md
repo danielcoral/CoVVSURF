@@ -16,4 +16,4 @@ if (!requireNamespace("devtools", quietly = TRUE)) {
 devtools::install_github("robingenuer/VSURF")
 ```
 
-The [vignette](https://github.com/robingenuer/CoVVSURF/blob/master/vignettes/intro_CoVVSURF.Rmd) gives instruction to install the package and basic instruction to apply the CoV/VSURF procedure in the context of classification and in the context of regression.
+The [vignette](https://robingenuer.github.io/CoVVSURF/) gives instruction to install the package and basic instruction to apply the CoV/VSURF procedure in the context of classification and in the context of regression.
